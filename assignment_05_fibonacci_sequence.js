@@ -54,4 +54,104 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+const readlineSync = require("readline-sync");
+
+/**
+ * Generates the first n terms of the Fibonacci sequence using a loop.
+ *
+ * @param {number} n - How many terms to generate (must be positive).
+ * @returns {number[]} An array containing the first n Fibonacci numbers.
+ */
+function generateFibonacci(n) {
+  const sequence = [];
+
+  for (let i = 0; i < n; i++) {
+    if (i === 0) {
+      sequence.push(0);
+    } else if (i === 1) {
+      sequence.push(1);
+    } else {
+      sequence.push(sequence[i - 1] + sequence[i - 2]);
+    }
+  }
+
+  return sequence;
+}
+
+/**
+ * Checks whether a given number appears in the Fibonacci sequence.
+ * Generates terms with a loop, stopping once the running value reaches
+ * or passes the target number.
+ *
+ * @param {number} num - The number to check.
+ * @returns {boolean} true if num is a Fibonacci number, false otherwise.
+ */
+function isFibonacci(num) {
+  // Negative numbers are never part of the sequence.
+  if (num < 0) {
+    return false;
+  }
+
+  let prev = 0;
+  let curr = 1;
+
+  // 0 is always the first Fibonacci term.
+  if (num === 0) {
+    return true;
+  }
+
+  // Generate terms until we reach or pass num.
+  while (curr < num) {
+    const next = prev + curr;
+    prev = curr;
+    curr = next;
+  }
+
+  return curr === num;
+}
+
+/**
+ * Part A: Asks the user for a term count and prints that many
+ * Fibonacci numbers on one line.
+ */
+function runPartA() {
+  console.log("\n--- Part A: Print the First N Terms ---");
+
+  const n = readlineSync.questionInt("How many terms? ");
+
+  if (n <= 0) {
+    console.log("Error: N must be a positive integer.");
+    return;
+  }
+
+  const sequence = generateFibonacci(n);
+  console.log(`Fibonacci sequence: ${sequence.join(" ")}`);
+}
+
+/**
+ * Part B: Asks the user for a number and reports whether it belongs
+ * to the Fibonacci sequence.
+ */
+function runPartB() {
+  console.log("\n--- Part B: Check if a Number Belongs to the Sequence ---");
+
+  const num = readlineSync.questionInt("Enter a number to check: ");
+
+  if (isFibonacci(num)) {
+    console.log(`${num} is a Fibonacci number.`);
+  } else {
+    console.log(`${num} is NOT a Fibonacci number.`);
+  }
+}
+
+/**
+ * Runs both parts of the assignment in sequence.
+ */
+function main() {
+  runPartA();
+  runPartB();
+}
+
+main();
+
 

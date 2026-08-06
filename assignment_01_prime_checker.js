@@ -37,9 +37,56 @@
 // - Use readlineSync.questionInt() to read integer input from the user.
 //
 
-//
-// =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
-// =============================================================================
+const readlineSync = require("readline-sync");
+
+/**
+ * Checks whether a given whole number is prime.
+ *
+ * @param {number} num - The number to check.
+ * @returns {boolean} true if num is prime, false otherwise.
+ */
+function isPrime(num) {
+  // Numbers less than 2 are never prime.
+  if (num < 2) {
+    return false;
+  }
+
+  // 2 is the only even prime number.
+  if (num === 2) {
+    return true;
+  }
+
+  // Eliminate other even numbers quickly.
+  if (num % 2 === 0) {
+    return false;
+  }
+
+  // Only need to check odd divisors up to the square root of num.
+  // If num had a divisor larger than its square root, it would also
+  // have a corresponding divisor smaller than the square root.
+  for (let divisor = 3; divisor <= Math.sqrt(num); divisor += 2) {
+    if (num % divisor === 0) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
+ * Reads a number from the user, checks whether it is prime,
+ * and prints the result.
+ */
+function main() {
+  const number = readlineSync.questionInt("Enter a number: ");
+
+  if (isPrime(number)) {
+    console.log(`${number} is a prime number.`);
+  } else {
+    console.log(`${number} is NOT a prime number.`);
+  }
+}
+
+main();
 
 
